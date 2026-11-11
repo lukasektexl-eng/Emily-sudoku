@@ -1,0 +1,83 @@
+/*
+ * The palette comes from the letters: her eyes are "dark blue at the outer
+ * rim, lighter toward the centre", so the blues run navy -> sea -> shallow.
+ * Paper is warm, and the one accent is peony pink.
+ */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('../assets/fonts/manrope-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-wght-italic.woff2') format('woff2');
+}
+
+:root {
+  --paper: #f7f3ec;
+  --paper-2: #efe9dd;
+  --cell: #fdfbf6;
+  --line: #d8d0c0;
+  --line-soft: #e6dfd1;
+  --ink: #12324a;
+  --ink-2: #566d7e;
+  --sea: #2a6a95;
+  --shallow: #cfe3ee;
+  --wash: #e6eff2;
+  --peer: #edf1ee;
+  --sel: #a8cde1;
+  --peony: #e7a3b1;
+  --peony-deep: #c2647b;
+  --peony-wash: #f8e8ea;
+  --wrong: #b3402c;
+  --wrong-wash: #f5dcd5;
+  --on-ink: #f7f3ec;
+  --scrim: rgba(18, 50, 74, 0.38);
+  --letter-paper: #fffcf5;
+  --letter-ink: #2b3138;
+  --desk: #e7dfcf;
+
+  --ui: 'Manrope', ui-rounded, system-ui, -apple-system, sans-serif;
+  --serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --gutter: 20px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Evening: the same ocean after sunset. */
+:root[data-theme='dark'] {
+  --paper: #0e2130;
+  --paper-2: #14293a;
+  --cell: #132838;
+  --line: #2b4559;
+  --line-soft: #1f384b;
+  --ink: #e8eef2;
+  --ink-2: #93aabb;
+  --sea: #86bfe0;
+  --shallow: #1f4a66;
+  --wash: #152f42;
+  --peer: #172f41;
+  --sel: #2b6388;
+  --peony: #e7a3b1;
+  --peony-deep: #eaa9b7;
+  --peony-wash: #3a2a35;
+  --wrong: #f19580;
+  --wrong-wash: #4a2a26;
+  --on-ink: #0e2130;
+  --scrim: rgba(3, 12, 20, 0.6);
+  --desk: #0a1823;
+}
