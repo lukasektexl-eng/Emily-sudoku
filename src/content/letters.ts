@@ -19,12 +19,6 @@ export const SIGNATURE = 'Lukas';
 
 const raw: { title: string; body: string }[] = [
   {
-    title: 'If you ever read this',
-    body: `My dearest Emily,
-
-if you ever read this one day, then it means one of two things. Either I did something unusual or you did something special, but that doesn't matter, because either way I still love you.`,
-  },
-  {
     title: 'Peace',
     body: `From the first bench we sat on together, I instantly knew there was something special. You do have especially mesmerizing eyes; however, there is one attribute no other girl I've met ever had: peace.
 
@@ -142,5 +136,4 @@ export const LINES: string[] = [
   'Still the ocean in your eyes hasn\'t run out of blue for me to get lost in.',
   'I want to pick every peony on this planet just to bring them to you.',
   'May every spark remind you of me.',
-  'Either way I still love you.',
 ];

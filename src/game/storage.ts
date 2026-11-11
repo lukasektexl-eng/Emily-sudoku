@@ -25,3 +25,29 @@ export function remove(key: string): void {
     /* ignore */
   }
 }
+
+/**
+ * Bump this to wipe every saved game and all progress on every phone, once,
+ * the next time the app is opened with the new version. Never lower it.
+ *   1: fresh start for Emily (11 Nov 2026)
+ */
+export const RESET_EPOCH = 1;
+
+/** Clears everything saved by this app if it was saved before the current epoch. */
+export function resetIfOutdated(store: Storage | undefined = globalThis.localStorage): boolean {
+  try {
+    if (!store) return false;
+    const key = PREFIX + 'epoch';
+    if (Number(store.getItem(key)) >= RESET_EPOCH) return false;
+    const doomed: string[] = [];
+    for (let i = 0; i < store.length; i++) {
+      const k = store.key(i);
+      if (k && k.startsWith(PREFIX)) doomed.push(k);
+    }
+    doomed.forEach((k) => store.removeItem(k));
+    store.setItem(key, String(RESET_EPOCH));
+    return doomed.length > 0;
+  } catch {
+    return false;
+  }
+}

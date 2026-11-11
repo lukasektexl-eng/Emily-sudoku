@@ -1,6 +1,6 @@
 import { normalize, type Progress } from './game/progress';
 import type { Game, GameKind } from './game/state';
-import { load, remove, save } from './game/storage';
+import { load, remove, resetIfOutdated, save } from './game/storage';
 import { screenIn, setReduceMotion } from './ui/fx';
 import { setHapticsEnabled } from './ui/haptics';
 import { setSoundEnabled } from './ui/sound';
@@ -14,6 +14,9 @@ export interface Screen {
 }
 
 const HISTORY_CAP = 400;
+
+// Runs before any progress is read, so a reset is never half-applied.
+resetIfOutdated();
 
 class App {
   progress: Progress = normalize(load<Progress | null>('progress', null));
