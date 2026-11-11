@@ -154,6 +154,19 @@
 .install b {
   color: var(--ink);
 }
+.install.can {
+  border-style: solid;
+  border-color: var(--sea);
+  padding-right: 10px;
+}
+.btn.small {
+  width: auto;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 11px;
+  font-size: 15px;
+  flex: none;
+}
 
 /* ---- shared page header ---- */
 .page-head {

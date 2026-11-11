@@ -12,11 +12,19 @@ A quiet, ad-free sudoku made for one person. It installs on an iPhone home scree
 - Paper and Evening looks, soft sounds, short animations
 - Everything is saved on the phone. No accounts, no tracking, no ads.
 
-## Putting it on an iPhone
+## Putting it on a phone
 
-1. Open the site in **Safari**.
-2. Tap the **Share** button, then **Add to Home Screen**.
-3. Open it from the new icon. It runs full screen and keeps working offline.
+Link: https://lukasektexl-eng.github.io/Emily-sudoku/
+
+**iPhone**
+1. Open the link in **Safari** (not Chrome or Instagram's browser).
+2. Tap **Share**, then **Add to Home Screen**, then **Add**.
+
+**Android**
+1. Open the link in **Chrome** (or Samsung Internet).
+2. Tap **Add** on the card on the home screen, or use the browser menu (⋮) → **Install app** / **Add to Home screen**.
+
+Either way the icon sits next to her other apps, opens full screen with no browser bars, and keeps working offline.
 
 ## Adding or editing letters
 

@@ -9,6 +9,7 @@ import { stagger } from '../fx';
 import { ICON } from '../icons';
 import { madeWithLove } from '../made';
 import { openSheet } from '../sheet';
+import { installCard } from '../install-card';
 import { unlockAudio } from '../sound';
 
 function greeting(): string {
@@ -26,13 +27,6 @@ const DIFFICULTY_NOTE: Record<Difficulty, string> = {
   hard: 'Pairs and patience',
   expert: 'Bring tea',
 };
-
-function isIosSafariTab(): boolean {
-  const ua = navigator.userAgent;
-  const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-  const standalone = matchMedia('(display-mode: standalone)').matches || (navigator as unknown as { standalone?: boolean }).standalone === true;
-  return ios && !standalone;
-}
 
 export function homeScreen(): Screen {
   const p = app.progress;
@@ -124,33 +118,14 @@ export function homeScreen(): Screen {
     row(ICON.gear, 'Settings', 'Sound, look, backup', goSettings),
   );
 
-  let install: HTMLElement | null = null;
-  if (!p.installHintSeen && isIosSafariTab()) {
-    install = h(
-      'aside',
-      { class: 'install' },
-      svg(ICON.share),
-      h('p', null, h('b', null, 'Keep me on your home screen.'), ' Tap the share button below, then “Add to Home Screen”.'),
-      h(
-        'button',
-        {
-          class: 'icon-btn',
-          type: 'button',
-          'aria-label': 'Dismiss',
-          onclick: () => {
-            p.installHintSeen = true;
-            app.commit();
-            install?.remove();
-          },
-        },
-        svg(ICON.close),
-      ),
-    );
-  }
+  const install = installCard(() => {
+    p.installHintSeen = true;
+    app.commit();
+  }, p.installHintSeen);
 
-  const el = h('div', { class: 'screen home' }, head, hero, install, list, madeWithLove());
-  stagger([hero, ...(install ? [install] : []), ...Array.from(list.children)], 35, 40);
-  return { el };
+  const el = h('div', { class: 'screen home' }, head, hero, install.el, list, madeWithLove());
+  stagger([hero, ...(install.el.hidden ? [] : [install.el]), ...Array.from(list.children)], 35, 40);
+  return { el, destroy: install.destroy };
 }
 
 function freePlaySheet(): void {
