@@ -144,3 +144,24 @@ describe('sharing is read-only', () => {
     expect(text).not.toContain('streak');
   });
 });
+
+describe('nothing in the app can bypass the protections', () => {
+  // Every file in src/, read as text.
+  const files = import.meta.glob('../src/**/*.ts', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+  const code = (exceptFile: string[]) =>
+    Object.entries(files).filter(([path]) => !exceptFile.some((f) => path.endsWith(f)));
+
+  it('progress is only ever written through persist.ts (which never lowers it)', () => {
+    for (const [path, src] of code(['game/persist.ts'])) {
+      expect(src, path).not.toMatch(/save(Raw)?\(\s*['"`]progress['"`]/);
+      expect(src, path).not.toMatch(/['"`]emily-sudoku:progress['"`]/);
+    }
+  });
+
+  it('no code clears storage or deletes progress or backups', () => {
+    for (const [path, src] of code(['game/storage.ts'])) {
+      expect(src, path).not.toMatch(/localStorage\s*\.\s*clear\s*\(/);
+      expect(src, path).not.toMatch(/remove(Item)?\(\s*['"`](emily-sudoku:)?(progress|backups|epoch)['"`]/);
+    }
+  });
+});

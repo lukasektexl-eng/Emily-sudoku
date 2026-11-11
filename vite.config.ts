@@ -40,6 +40,10 @@ self.addEventListener('fetch', (e) => {
 
 export default defineConfig({
   base: '/Emily-sudoku/',
+  define: {
+    // Identifies each published version, so progress is backed up before a new one runs.
+    __BUILD_ID__: JSON.stringify(process.env.GITHUB_SHA ?? `local-${Date.now()}`),
+  },
   plugins: [serviceWorker()],
   build: { target: 'es2020' },
   worker: { format: 'es' },
