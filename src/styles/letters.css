@@ -1,0 +1,321 @@
+/* ---- the letters drawer ---- */
+.letters-list {
+  display: flex;
+  flex-direction: column;
+}
+.letters-list li {
+  border-bottom: 1px solid var(--line-soft);
+}
+.letter-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 2px;
+  text-align: left;
+}
+button.letter-item:active {
+  background: var(--paper-2);
+}
+.letter-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.letter-text b {
+  font: 500 19px/1.2 var(--serif);
+}
+.letter-text small {
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+.letter-item.new .letter-text small {
+  color: var(--peony-deep);
+  font-weight: 600;
+}
+.letter-item.locked {
+  color: var(--ink-2);
+}
+.letter-item.locked .letter-text b {
+  font-style: italic;
+  font-weight: 400;
+}
+.lock {
+  width: 18px;
+  height: 18px;
+  color: var(--line);
+}
+:root[data-theme='dark'] .lock {
+  color: var(--ink-2);
+}
+
+/* a small paper envelope */
+.envelope {
+  position: relative;
+  width: 50px;
+  height: 35px;
+  flex: none;
+  border-radius: 4px;
+  background: var(--letter-paper);
+  border: 1.5px solid var(--ink);
+}
+.envelope .flap {
+  position: absolute;
+  left: -1.5px;
+  right: -1.5px;
+  top: -1.5px;
+  height: 64%;
+  background: var(--ink);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.envelope .flap::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px 3px 2.5px;
+  background: var(--letter-paper);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.envelope .seal {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px;
+  border-radius: 50%;
+  background: var(--peony-deep);
+  box-shadow: inset -1.5px -1.5px 0 rgba(0, 0, 0, 0.12);
+}
+/* opened: the flap is gone and the page peeks out of the top */
+.envelope.opened {
+  margin-top: 9px;
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--ink) calc(50% - 1px) calc(50% + 0.5px), transparent calc(50% + 0.5px)) left top / 50% 58% no-repeat,
+    linear-gradient(to bottom left, transparent calc(50% - 1px), var(--ink) calc(50% - 1px) calc(50% + 0.5px), transparent calc(50% + 0.5px)) right top / 50% 58% no-repeat,
+    var(--letter-paper);
+}
+.envelope.opened .seal {
+  display: none;
+}
+.envelope.opened .flap {
+  left: 7px;
+  right: 7px;
+  top: -10px;
+  height: 10px;
+  clip-path: none;
+  background: var(--letter-paper);
+  border: 1.5px solid var(--ink);
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+}
+.envelope.opened .flap::after {
+  inset: 4px 6px auto;
+  height: 1.5px;
+  clip-path: none;
+  background: var(--peony-deep);
+  opacity: 0.7;
+}
+.envelope.locked {
+  border-color: var(--line);
+  background: transparent;
+}
+.envelope.locked .flap {
+  background: var(--line);
+}
+.envelope.locked .flap::after {
+  background: var(--paper);
+}
+.envelope.locked .seal {
+  background: var(--line);
+  box-shadow: none;
+}
+:root[data-theme='dark'] .envelope:not(.locked) {
+  border-color: #c9d6de;
+}
+:root[data-theme='dark'] .envelope.sealed .flap {
+  background: #c9d6de;
+}
+:root[data-theme='dark'] .envelope.opened {
+  --ink: #12324a;
+}
+
+/* ---- reading a letter ---- */
+.reader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--desk);
+  opacity: 0;
+  transition: opacity 0.26s;
+}
+.reader.open {
+  opacity: 1;
+}
+.reader-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: calc(var(--safe-top) + 62px) 14px calc(var(--safe-bottom) + 40px);
+}
+.reader-close {
+  position: absolute;
+  top: calc(var(--safe-top) + 10px);
+  right: 10px;
+  z-index: 3;
+  background: var(--desk);
+  border-radius: 50%;
+}
+.paper {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 30px 26px 34px;
+  background-color: var(--letter-paper);
+  /* a little grain so it reads as paper rather than a white box */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(60, 45, 20, 0.18), 0 10px 26px -14px rgba(40, 30, 10, 0.4);
+  color: var(--letter-ink);
+  font: 400 18px/1.68 var(--serif);
+  user-select: text;
+  -webkit-user-select: text;
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.5s, transform 0.6s var(--ease);
+}
+.reader.show-paper .paper {
+  opacity: 1;
+  transform: none;
+}
+.paper-no {
+  font: 600 12.5px var(--ui);
+  color: #8a7d68;
+  margin-bottom: 6px;
+}
+.paper h2 {
+  font: italic 400 30px/1.15 var(--serif);
+  letter-spacing: -0.01em;
+  color: #12324a;
+  margin-bottom: 20px;
+}
+.paper p + p {
+  margin-top: 1.05em;
+}
+.paper .signature {
+  margin-top: 1.8em;
+  text-align: right;
+  font-style: italic;
+  font-size: 23px;
+  color: #12324a;
+}
+.paper .signature .heart {
+  display: inline-flex;
+  width: 15px;
+  height: 15px;
+  margin-left: 8px;
+  color: #c2647b;
+  vertical-align: baseline;
+}
+
+/* ---- the opening ceremony ---- */
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: var(--desk);
+  transition: opacity 0.45s;
+}
+.stage p {
+  font: italic 400 22px var(--serif);
+  color: var(--ink);
+  transition: opacity 0.3s;
+}
+.stage.gone {
+  opacity: 0;
+  pointer-events: none;
+}
+.big-envelope {
+  position: relative;
+  width: 230px;
+  height: 152px;
+  perspective: 700px;
+}
+.big-envelope i {
+  position: absolute;
+  display: block;
+}
+.big-envelope .back {
+  inset: 0;
+  background: #e9dcc4;
+  border-radius: 6px;
+}
+.big-envelope .page {
+  left: 12px;
+  right: 12px;
+  top: 10px;
+  bottom: 8px;
+  background: var(--letter-paper);
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(60, 45, 20, 0.12);
+  transition: transform 0.7s var(--ease);
+}
+.big-envelope .front {
+  inset: 0;
+  background: #f6ecd9;
+  border-radius: 6px;
+  clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+  box-shadow: inset 0 0 0 1px rgba(60, 45, 20, 0.1);
+}
+.big-envelope .flap {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60%;
+  background: #efe2ca;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform 0.5s var(--ease);
+  z-index: 3;
+}
+.big-envelope .seal {
+  left: 50%;
+  top: 60%;
+  width: 34px;
+  height: 34px;
+  margin: -19px -17px;
+  border-radius: 50%;
+  background: #c2647b;
+  box-shadow: inset -3px -3px 0 rgba(0, 0, 0, 0.13), inset 2px 2px 0 rgba(255, 255, 255, 0.18);
+  z-index: 4;
+  transition: transform 0.3s var(--ease), opacity 0.3s;
+}
+.big-envelope .back {
+  z-index: 0;
+}
+.big-envelope .page {
+  z-index: 1;
+}
+.big-envelope .front {
+  z-index: 2;
+}
+.stage.break .seal {
+  transform: scale(1.5);
+  opacity: 0;
+}
+.stage.lift .flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+.stage.out .page {
+  transform: translateY(-62%);
+}
+.stage.out p {
+  opacity: 0;
+}
