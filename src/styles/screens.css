@@ -450,6 +450,15 @@
   color: var(--ink-2);
   font-weight: 600;
 }
+.share-btn {
+  gap: 10px;
+  margin: -6px 0 28px;
+}
+.share-btn .icon {
+  width: 21px;
+  height: 21px;
+  color: var(--sea);
+}
 .best h2,
 .group h2 {
   font-size: 13px;
