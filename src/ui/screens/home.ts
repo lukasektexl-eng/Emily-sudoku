@@ -114,7 +114,7 @@ export function homeScreen(): Screen {
     row(ICON.envelope, 'Letters', lettersSub, () => goLetters(), unread.length ? h('span', { class: 'dot', 'aria-label': 'new' }) : null),
     row(ICON.path, 'All levels', `${level - 1} done · ${totalStars(p)} stars`, goLevels),
     row(ICON.dice, 'Free play', 'Any difficulty, no strings', freePlaySheet),
-    row(ICON.chart, 'Your numbers', 'Best times and streaks', goStats),
+    row(ICON.chart, 'Your numbers', 'Best times, streaks, share', goStats),
     row(ICON.gear, 'Settings', 'Sound, look, backup', goSettings),
   );
 

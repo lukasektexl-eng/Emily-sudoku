@@ -6,6 +6,7 @@ import { h, svg } from '../dom';
 import { stagger } from '../fx';
 import { ICON } from '../icons';
 import { madeWithLove } from '../made';
+import { shareButton } from '../share-button';
 
 export function statsScreen(): Screen {
   const p = app.progress;
@@ -48,6 +49,7 @@ export function statsScreen(): Screen {
       h('h1', null, 'Your numbers'),
     ),
     figures,
+    shareButton(),
     best,
     h('p', { class: 'page-intro' }, letters ? `${letters} ${letters === 1 ? 'letter' : 'letters'} opened so far.` : 'No letters yet. The first one opens after level 5.'),
     madeWithLove(),
