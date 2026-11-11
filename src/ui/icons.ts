@@ -19,6 +19,7 @@ export const ICON = {
   check: wrap('<path d="m5.5 12.6 4.2 4.2 8.8-9.4"/>'),
   lock: wrap('<rect x="6" y="10.5" width="12" height="9" rx="2"/><path d="M8.8 10.5V8a3.2 3.2 0 0 1 6.4 0v2.5"/>'),
   share: wrap('<path d="M12 14.5V4M8.3 7.3 12 3.6l3.7 3.7"/><path d="M7.5 10.5H6.3a1.3 1.3 0 0 0-1.3 1.3v7a1.3 1.3 0 0 0 1.3 1.3h11.4a1.3 1.3 0 0 0 1.3-1.3v-7a1.3 1.3 0 0 0-1.3-1.3h-1.2"/>'),
+  download: wrap('<path d="M12 4v10.5M7.8 10.6 12 14.8l4.2-4.2"/><path d="M5 16.5v1.8A1.7 1.7 0 0 0 6.7 20h10.6a1.7 1.7 0 0 0 1.7-1.7v-1.8"/>'),
   envelope: wrap('<rect x="3.5" y="6" width="17" height="12.5" rx="1.8"/><path d="m4 7 8 6.3L20 7"/>'),
   calendar: wrap('<rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v3.5M15.5 3.5v3.5"/>'),
   path: wrap('<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h5.5a3 3 0 0 0 0-6h-3a3 3 0 0 1 0-6H16"/>'),

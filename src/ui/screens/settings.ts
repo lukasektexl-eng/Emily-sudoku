@@ -4,6 +4,7 @@ import { goHome } from '../../nav';
 import { h, svg } from '../dom';
 import { tick } from '../haptics';
 import { ICON } from '../icons';
+import { installState, manualSteps, promptInstall } from '../install';
 import { madeWithLove } from '../made';
 import { openSheet, toast } from '../sheet';
 import { sfx, unlockAudio } from '../sound';
@@ -78,10 +79,11 @@ export function settingsScreen(): Screen {
       { class: 'group' },
       h('h2', null, 'Feel'),
       toggle('sound', 'Sound', 'Soft notes when things click into place'),
-      toggle('haptics', 'Taps you can feel', 'Works on newer iPhones'),
+      toggle('haptics', 'Taps you can feel', 'Works on most phones'),
       toggle('reduceMotion', 'Calmer animations', 'Keeps movement to a minimum'),
       h('div', { class: 'setting' }, h('span', { class: 'row-text' }, h('b', null, 'Look'), h('small', null, 'Auto follows your phone')), seg),
     ),
+    homeScreenGroup(),
     h(
       'section',
       { class: 'group' },
@@ -107,6 +109,26 @@ export function settingsScreen(): Screen {
     madeWithLove(),
   );
   return { el };
+}
+
+function homeScreenGroup(): HTMLElement | null {
+  const st = installState();
+  if (st.kind === 'installed') return null;
+  const body =
+    st.kind === 'prompt'
+      ? h(
+          'button',
+          {
+            class: 'btn primary',
+            type: 'button',
+            onclick: async () => {
+              if (await promptInstall()) toast('Added. Look for the little blue grid.');
+            },
+          },
+          'Add to home screen',
+        )
+      : h('p', { class: 'group-note' }, manualSteps(st.platform));
+  return h('section', { class: 'group' }, h('h2', null, 'Home screen'), body);
 }
 
 async function copyCode(): Promise<void> {

@@ -5,8 +5,10 @@ import './styles/screens.css';
 import './styles/letters.css';
 import { app } from './app';
 import { goHome } from './nav';
+import { initInstall } from './ui/install';
 import { unlockAudio } from './ui/sound';
 
+initInstall();
 app.mount(document.getElementById('app')!);
 goHome('none');
 
