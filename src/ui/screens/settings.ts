@@ -152,7 +152,7 @@ function restoreSheet(): void {
       'div',
       { class: 'sheet-body' },
       h('h2', null, 'Restore from a code'),
-      h('p', null, 'This replaces the progress on this phone with what’s in the code.'),
+      h('p', null, 'This adds the progress from the code to this phone. Nothing already here is lost.'),
       area,
       error,
       h(

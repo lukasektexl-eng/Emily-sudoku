@@ -1,6 +1,9 @@
-import { normalize, type Progress } from './game/progress';
+import { backupBeforeNewVersion, loadProgress, saveProgress } from './game/persist';
+import type { Progress } from './game/progress';
 import type { Game, GameKind } from './game/state';
 import { load, remove, resetIfOutdated, save } from './game/storage';
+
+declare const __BUILD_ID__: string;
 import { screenIn, setReduceMotion } from './ui/fx';
 import { setHapticsEnabled } from './ui/haptics';
 import { setSoundEnabled } from './ui/sound';
@@ -17,9 +20,11 @@ const HISTORY_CAP = 400;
 
 // Runs before any progress is read, so a reset is never half-applied.
 resetIfOutdated();
+// A new version of the app is about to run: copy her progress somewhere safe first.
+backupBeforeNewVersion(typeof __BUILD_ID__ === 'string' ? __BUILD_ID__ : 'dev');
 
 class App {
-  progress: Progress = normalize(load<Progress | null>('progress', null));
+  progress: Progress = loadProgress().progress;
   private root!: HTMLElement;
   private current: Screen | null = null;
 
@@ -40,8 +45,9 @@ class App {
     screenIn(screen.el, dir);
   }
 
+  /** Saves progress. Merges with what's stored, so nothing she earned is ever lowered. */
   commit(): void {
-    save('progress', this.progress);
+    this.progress = saveProgress(this.progress);
   }
 
   applySettings(): void {
